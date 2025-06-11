@@ -1,6 +1,46 @@
-# CI/CD Pipeline
+# CI/CD Pipeline Project
 
-This repository contains a Node.js project with a complete CI/CD pipeline implemented using GitHub Actions.
+This project demonstrates a full CI/CD pipeline, including automated testing, versioning, and changelog generation. It now includes a mobile to-do list application built with Expo.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm
+
+### Installation
+
+1.  Clone the repository
+2.  Install the dependencies:
+    ```bash
+    npm install
+    ```
+    This will also install the dependencies for the mobile app.
+
+## Available Scripts
+
+### Root Project
+
+-   `npm start`: Starts the server.
+-   `npm run dev`: Starts the server in development mode with nodemon.
+-   `npm test`: Runs tests with Jest.
+-   `npm run lint`: Lints the code with ESLint.
+-   `npm run release`: Creates a new release (increments version, creates tag, updates changelog).
+
+### Mobile App
+
+You can run the mobile app from the root directory using the following commands:
+
+-   `npm run mobile:start`: Starts the Expo development server.
+-   `npm run mobile:android`: Starts the app on a connected Android device or emulator.
+-   `npm run mobile:ios`: Starts the app on the iOS simulator (macOS only).
+-   `npm run mobile:web`: Starts the app in a web browser.
+-   `npm run mobile:lint`: Lints the mobile app's code.
+
+## To-Do List App
+
+The included application is a simple to-do list that runs on iOS, Android, and the web. You can add, complete, and delete tasks.
 
 ## Automated Release Tag Builds
 
