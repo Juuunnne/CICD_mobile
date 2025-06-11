@@ -28,4 +28,38 @@ jobs:
         run: npm run mobile:lint
 
       - name: Run mobile unit tests
-        run: npm run mobile:test 
+        run: npm run mobile:test
+
+  mobile-build-sdk:
+    needs: mobile-test-lint
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[build-mobile]')
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install root & mobile-app deps
+        run: npm ci
+
+      - name: Install Expo CLI globally
+        run: npm install -g expo-cli
+
+      - name: Prebuild native projects (SDK build)
+        run: |
+          cd mobile-app
+          expo prebuild --platform android --no-install --clean
+
+      - name: Archive Android project as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-android-sdk
+          path: mobile-app/android/
+          retention-days: 7 
