@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.2.0 (2025-06-11)
+
+
+### Features
+
+* add mobile to-do app and integrate with ci ([7813b7e](https://github.com/Juuunnne/CICD_mobile/commit/7813b7e46933fdcb30178969f347697c7a1032b3))
+
 ## [1.1.0](https://github.com/Juuunnne/CI_Pipeline/compare/v1.0.5...v1.1.0) (2025-06-11)
 
 
