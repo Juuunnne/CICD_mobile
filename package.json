@@ -1,0 +1,49 @@
+{
+  "name": "cicdpipeline",
+  "version": "1.1.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
+    "lint": "eslint . --config eslint.config.js",
+    "build": "node -e \"const fs = require('fs'); const path = require('path'); !fs.existsSync('dist') && fs.mkdirSync('dist'); ['index.js', 'package.json', 'README.md', 'CHANGELOG.md'].forEach(file => { if (fs.existsSync(file)) fs.copyFileSync(file, path.join('dist', file)); }); if (fs.existsSync('.env')) fs.copyFileSync('.env', path.join('dist', '.env'));\"",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:patch": "standard-version --release-as patch",
+    "prepare": "husky install",
+    "postinstall": "npm run install-mobile",
+    "install-mobile": "cd mobile-app && npm install",
+    "mobile:start": "cd mobile-app && npm start",
+    "mobile:android": "cd mobile-app && npm run android",
+    "mobile:ios": "cd mobile-app && npm run ios",
+    "mobile:web": "cd mobile-app && npm run web",
+    "mobile:lint": "cd mobile-app && npm run lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.9",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@eslint/js": "^9.25.1",
+    "babel-jest": "^29.7.0",
+    "eslint": "^9.25.1",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "nodemon": "^3.1.10",
+    "standard-version": "^9.5.0",
+    "supertest": "^7.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  }
+}
