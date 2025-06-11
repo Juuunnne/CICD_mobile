@@ -21,7 +21,8 @@
     "mobile:android": "cd mobile-app && npm run android",
     "mobile:ios": "cd mobile-app && npm run ios",
     "mobile:web": "cd mobile-app && npm run web",
-    "mobile:lint": "cd mobile-app && npm run lint"
+    "mobile:lint": "cd mobile-app && npm run lint",
+    "mobile:test": "cd mobile-app && npm test --"
   },
   "keywords": [],
   "author": "",
