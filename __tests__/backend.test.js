@@ -4,8 +4,7 @@ import db from '../db.js';
 
 describe('Backend API /api/todos', () => {
   beforeEach(() => {
-    db.data.todos = [];
-    db.write();
+    db.set('todos', []).write();
   });
 
   it('creates a todo', async () => {

@@ -1,18 +1,15 @@
 import { join, dirname } from 'path';
-import { LowSync, JSONFileSync } from 'lowdb';
+import low from 'lowdb';
+import FileSync from 'lowdb/adapters/FileSync.js';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const file = join(__dirname, 'db.json');
-const adapter = new JSONFileSync(file);
-const db = new LowSync(adapter);
+const adapter = new FileSync(file);
+const db = low(adapter);
 
-db.read();
-
-db.data ||= { todos: [] };
-
-db.write();
+db.defaults({ todos: [] }).write();
 
 export default db; 

@@ -18,22 +18,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/todos', (req, res) => {
-  res.json(db.data.todos);
+  res.json(db.get('todos').value());
 });
 
 app.post('/api/todos', (req, res) => {
   const { text } = req.body;
   if (!text) return res.status(400).json({ error: 'text is required' });
   const newTodo = { id: Date.now().toString(), text, completed: false };
-  db.data.todos.push(newTodo);
-  db.write();
+  db.get('todos').push(newTodo).write();
   res.status(201).json(newTodo);
 });
 
 app.put('/api/todos/:id', (req, res) => {
   const { id } = req.params;
   const { text, completed } = req.body;
-  const todo = db.data.todos.find(t => t.id === id);
+  const todo = db.get('todos').find({ id }).value();
   if (!todo) return res.status(404).json({ error: 'Not found' });
   if (text !== undefined) todo.text = text;
   if (completed !== undefined) todo.completed = completed;
@@ -43,10 +42,9 @@ app.put('/api/todos/:id', (req, res) => {
 
 app.delete('/api/todos/:id', (req, res) => {
   const { id } = req.params;
-  const initialLength = db.data.todos.length;
-  db.data.todos = db.data.todos.filter(t => t.id !== id);
-  if (db.data.todos.length === initialLength) return res.status(404).json({ error: 'Not found' });
-  db.write();
+  const exist = db.get('todos').find({ id }).value();
+  if (!exist) return res.status(404).json({ error: 'Not found' });
+  db.get('todos').remove({ id }).write();
   res.status(204).end();
 });
 
