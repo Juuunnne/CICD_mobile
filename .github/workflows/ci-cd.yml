@@ -33,7 +33,7 @@ jobs:
         run: npx eslint . --config eslint.config.js
 
       - name: Run tests
-        run: node --experimental-vm-modules ./node_modules/jest/bin/jest.js
+        run: npm test
 
   build:
     needs: backend-test
