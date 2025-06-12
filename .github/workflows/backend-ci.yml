@@ -3,31 +3,29 @@ name: Backend CI
 on:
   push:
     branches: [master, develop, develop-backend]
+    paths:
+      - "backend/**"
   pull_request:
     branches: [master, develop, develop-backend]
+    paths:
+      - "backend/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   backend-test:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, '[test-backend]')
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [18.x, 20.x]
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run linting
-        run: npx eslint . --config eslint.config.js
-
-      - name: Run tests
-        run: npm test 
+    uses: ./.github/workflows/reusable-ci.yml
+    with:
+      node-version: ${{ matrix.node-version }}
+      lint-command: "npx eslint . --config eslint.config.js"
+      test-command: "npm test" 
