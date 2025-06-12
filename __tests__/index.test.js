@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../index.js';
+import app from '../backend/index.js';
 
 describe('API Tests', () => {
   test('GET / should return welcome message', async () => {

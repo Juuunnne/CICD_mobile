@@ -48,14 +48,9 @@ app.delete('/api/todos/:id', (req, res) => {
   res.status(204).end();
 });
 
-// Only start the server if this file is run directly
-const currentModule = fileURLToPath(import.meta.url);
-const isMainModule = process.argv[1] === currentModule;
-
-if (isMainModule) {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+// Start server if run directly
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
-export default app; // For testing
+export default app; 
