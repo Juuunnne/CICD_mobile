@@ -90,3 +90,21 @@ git push --follow-tags origin master
 ```
 
 This will trigger the Release Tag Build workflow.
+
+## Rollback a Release
+
+If a release introduces a critical bug, you can roll it back using the provided scripts. This will delete the Git tag from the remote repository, which will remove the associated GitHub Release, and revert the release commit on the `main` branch.
+
+**Usage:**
+
+```bash
+# For Linux/macOS
+./rollback.sh v1.2.3
+
+# For Windows
+.\rollback.bat v1.2.3
+```
+
+Replace `v1.2.3` with the version you want to roll back. The script will ask for confirmation before proceeding.
+
+**Important:** This only reverts the Git history. If the broken version was deployed, you might need to manually redeploy a previous stable version.
