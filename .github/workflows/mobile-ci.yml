@@ -3,25 +3,44 @@ name: Mobile App CI
 on:
   push:
     branches: [develop, master]
+    paths:
+      - "mobile-app/**"
+      - "package-lock.json"
   pull_request:
     branches: [develop, master]
+    paths:
+      - "mobile-app/**"
+      - "package-lock.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  mobile-test-lint:
+  mobile-ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [18.x, 20.x]
+
     steps:
       - uses: actions/checkout@v4
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            mobile-app/package-lock.json
+      - name: Install dependencies (root)
+        run: npm ci
 
-      - name: Install dependencies (root & mobile-app)
+      - name: Install mobile dependencies
+        working-directory: ./mobile-app
         run: npm ci
 
       - name: Run mobile lint
@@ -30,34 +49,17 @@ jobs:
       - name: Run mobile unit tests
         run: npm run mobile:test
 
-  mobile-build-sdk:
-    needs: mobile-test-lint
-    runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, '[build-mobile]')
-    strategy:
-      matrix:
-        node-version: [18.x]
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Install root & mobile-app deps
-        run: npm ci
-
       - name: Install Expo CLI globally
+        if: contains(github.event.head_commit.message, '[build-mobile]')
         run: npm install -g expo-cli
 
       - name: Prebuild native projects (SDK build)
-        run: |
-          cd mobile-app
-          npx expo prebuild --platform android --non-interactive --no-install --clean
+        if: contains(github.event.head_commit.message, '[build-mobile]')
+        working-directory: ./mobile-app
+        run: npx expo prebuild --platform android --non-interactive --no-install --clean
 
       - name: Archive Android project as artifact
+        if: contains(github.event.head_commit.message, '[build-mobile]')
         uses: actions/upload-artifact@v4
         with:
           name: mobile-android-sdk

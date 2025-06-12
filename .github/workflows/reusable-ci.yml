@@ -1,0 +1,72 @@
+name: Reusable CI Steps
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        description: "The directory for running commands"
+        type: string
+        default: "."
+      node-version:
+        description: "Node.js version"
+        type: string
+        default: "18.x"
+      lint-command:
+        description: "Command to run for linting"
+        type: string
+        default: ""
+      test-command:
+        description: "Command to run for testing"
+        type: string
+        default: ""
+      build-command:
+        description: "Command to run for building"
+        type: string
+        default: ""
+    outputs:
+      build-artifact-name:
+        description: "The name of the build artifact produced"
+        value: ${{ jobs.reusable-steps.outputs.build-artifact-name }}
+
+jobs:
+  reusable-steps:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    outputs:
+      build-artifact-name: build-artifact-${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            mobile-app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        if: ${{ inputs.lint-command != '' }}
+        run: ${{ inputs.lint-command }}
+
+      - name: Run tests
+        if: ${{ inputs.test-command != '' }}
+        run: ${{ inputs.test-command }}
+
+      - name: Build
+        if: ${{ inputs.build-command != '' }}
+        run: ${{ inputs.build-command }}
+
+      - name: Upload build artifacts
+        if: ${{ inputs.build-command != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{- jobs.reusable-steps.outputs.build-artifact-name }}
+          path: ${{ inputs.working-directory }}/dist/
+          retention-days: 7 
