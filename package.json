@@ -2,14 +2,14 @@
   "name": "cicdpipeline",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "backend/index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node backend/index.js",
+    "dev": "nodemon backend/index.js",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "lint": "eslint . --config eslint.config.js",
-    "build": "node -e \"const fs = require('fs'); const path = require('path'); !fs.existsSync('dist') && fs.mkdirSync('dist'); ['index.js', 'package.json', 'README.md', 'CHANGELOG.md'].forEach(file => { if (fs.existsSync(file)) fs.copyFileSync(file, path.join('dist', file)); }); if (fs.existsSync('.env')) fs.copyFileSync('.env', path.join('dist', '.env'));\"",
+    "build": "node -e \"const fs=require('fs'),p=require('path');['backend/index.js','package.json','README.md','CHANGELOG.md'].forEach(f=>{if(fs.existsSync(f)){const dest=p.join('dist',f);fs.mkdirSync(p.dirname(dest),{recursive:true});fs.copyFileSync(f,dest);}});if(fs.existsSync('.env')){fs.mkdirSync('dist',{recursive:true});fs.copyFileSync('.env','dist/.env');}\"",
     "release": "standard-version",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "dotenv": "^16.5.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "lowdb": "^1.0.0"
   }
 }
