@@ -24,7 +24,7 @@ on:
         type: string
         default: ""
     outputs:
-      build-artifact-name:
+      build_artifact_name:
         description: "The name of the build artifact produced"
         value: ${{ jobs.reusable-steps.outputs.build_artifact_name }}
 
@@ -35,7 +35,7 @@ jobs:
       run:
         working-directory: ${{ inputs.working-directory }}
     outputs:
-      build-artifact-name: build-artifact-${{ github.run_id }}
+      build_artifact_name: ${{ steps.generate_name.outputs.artifact_name }}
     steps:
       - uses: actions/checkout@v4
 
@@ -50,6 +50,10 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Generate artifact name
+        id: generate_name
+        run: echo "artifact_name=build-artifact-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
       - name: Run linting
         if: ${{ inputs.lint-command != '' }}
@@ -67,6 +71,6 @@ jobs:
         if: ${{ inputs.build-command != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ jobs.reusable-steps.outputs.build_artifact_name }}
+          name: ${{ steps.generate_name.outputs.artifact_name }}
           path: ${{ inputs.working-directory }}/dist/
           retention-days: 7 
