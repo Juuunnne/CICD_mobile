@@ -29,3 +29,21 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# misc
+.eslintcache
+
+# testing
+coverage
+
+# mobile app
+mobile-app/node_modules/
+mobile-app/ios/
+mobile-app/android/
+mobile-app/.expo/
+mobile-app/.jest-cache/
+mobile-app/npm-debug.log*
+mobile-app/yarn-debug.log*
+mobile-app/yarn-error.log*
+
+backend/db.json
