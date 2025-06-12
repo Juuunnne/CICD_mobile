@@ -26,7 +26,7 @@ on:
     outputs:
       build-artifact-name:
         description: "The name of the build artifact produced"
-        value: ${{ jobs.reusable-steps.outputs.build-artifact-name }}
+        value: ${{ jobs.reusable-steps.outputs.build_artifact_name }}
 
 jobs:
   reusable-steps:
