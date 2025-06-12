@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/Juuunnne/CICD_mobile/compare/v1.1.0...v1.2.0) (2025-06-12)
+
+
+### Features
+
+* add rollback system for releases ([0133802](https://github.com/Juuunnne/CICD_mobile/commit/013380298536c2b01fb53163d04c81755abc3286))
+
 ## 1.1.0 (2025-06-12)
 
 
