@@ -55,7 +55,7 @@ jobs:
       - name: Prebuild native projects (SDK build)
         run: |
           cd mobile-app
-          expo prebuild --platform android --no-install --clean
+          npx expo prebuild --platform android --non-interactive --no-install --clean
 
       - name: Archive Android project as artifact
         uses: actions/upload-artifact@v4
