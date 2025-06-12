@@ -67,6 +67,6 @@ jobs:
         if: ${{ inputs.build-command != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{- jobs.reusable-steps.outputs.build-artifact-name }}
+          name: ${{ jobs.reusable-steps.outputs.build_artifact_name }}
           path: ${{ inputs.working-directory }}/dist/
           retention-days: 7 
