@@ -84,7 +84,25 @@ docs: add API usage section to README
 
 ---
 
-## 4. Releases
+## 4. Special CI Triggers
+
+On occasion, you may need to manually trigger a specific CI job that doesn't run on every commit. You can do this by including a specific flag in your **commit message**.
+
+| Flag | Workflow Triggered | Job |
+|---|---|---|
+| `[test-backend]` | `Backend CI` | Runs the full suite of backend linting and tests. |
+| `[build-mobile]` | `Mobile App CI` | Runs the Expo SDK prebuild (`mobile-build-sdk`) after the tests pass. |
+
+**Example commit message:**
+```
+feat(profile): add user avatar upload
+
+[build-mobile]
+```
+
+---
+
+## 5. Releases
 
 * Merging `develop` → `master` triggers the release workflow (`release-tag.yml`).
 * Versioning handled by **standard-version** based on commit history.
