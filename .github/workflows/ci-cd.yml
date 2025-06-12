@@ -5,12 +5,12 @@ permissions:
 
 on:
   push:
-    branches: [master]
+    branches: [master, develop, develop-backend]
   pull_request:
-    branches: [master]
+    branches: [master, develop, develop-backend]
 
 jobs:
-  test:
+  backend-test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -36,7 +36,7 @@ jobs:
         run: node --experimental-vm-modules ./node_modules/jest/bin/jest.js
 
   build:
-    needs: test
+    needs: backend-test
     runs-on: ubuntu-latest
 
     steps:
@@ -62,7 +62,7 @@ jobs:
           retention-days: 7
 
   release:
-    needs: [test, build]
+    needs: [backend-test, build]
     if: |
       github.event_name == 'push' &&
       github.ref == 'refs/heads/master' &&
