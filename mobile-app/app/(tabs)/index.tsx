@@ -9,6 +9,7 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
+import { ThemedView } from "@/components/ThemedView";
 
 interface Todo {
   id: string;
@@ -16,6 +17,7 @@ interface Todo {
   completed: boolean;
 }
 
+// Trigger CI
 export default function HomeScreen() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [text, setText] = useState('');
