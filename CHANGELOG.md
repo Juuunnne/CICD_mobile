@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/Juuunnne/CICD_mobile/compare/v1.1.0...v1.2.0) (2025-06-12)
+
+
+### Features
+
+* add rollback system for releases ([0133802](https://github.com/Juuunnne/CICD_mobile/commit/013380298536c2b01fb53163d04c81755abc3286))
+
+
+### Bug Fixes
+
+* **ci:** remove invalid hyphen in reusable workflow expression ([2ae2c5e](https://github.com/Juuunnne/CICD_mobile/commit/2ae2c5ed51c0acd03f1cda0da9938569b48f8bc7))
+* **ci:** resolve invalid self-reference in reusable workflow ([8d071f7](https://github.com/Juuunnne/CICD_mobile/commit/8d071f783d0c6c29a64163778ab5e07d9a3b4c64))
+
+
+### Code Refactoring
+
+* **ci:** split backend tests into separate workflow ([cc7eb45](https://github.com/Juuunnne/CICD_mobile/commit/cc7eb45cf65bd73ebf45bdfb1270976f560c8e65))
+
+
+### CI/CD
+
+* align main pipeline to build only on master ([7bb4b5e](https://github.com/Juuunnne/CICD_mobile/commit/7bb4b5e7db8e9661e52d338fb2619eb97abaf33a))
+* refactor workflows to use reusable components ([ff8d549](https://github.com/Juuunnne/CICD_mobile/commit/ff8d549d2064a3d6b6e86f0045b15b1bb1f263a7))
+
+
+### Documentation
+
+* minor change ([ab4277e](https://github.com/Juuunnne/CICD_mobile/commit/ab4277e39cfdeaadb52fe9f82b868a8d763e0e3d))
+* update git strategy with build triggers ([ffa6445](https://github.com/Juuunnne/CICD_mobile/commit/ffa6445d64a39b73d2723c052d3094f6848a09f9))
+
 ## 1.1.0 (2025-06-12)
 
 
